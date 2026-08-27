@@ -1,6 +1,7 @@
 import os
 
 import numpy as np
+from sklearn.model_selection import train_test_split
 from torchvision.datasets import CIFAR10
 
 
@@ -19,3 +20,18 @@ def load_unified(root=None):
     print("Datasets unified")
 
     return x, y, train.classes
+
+
+def generate_stratified_splits_60_10_30(y, seed=42):
+    #We create a array [0, 1, 2, ..., 59999]
+    idx = np.arange(len(y))
+
+    #First we split 70% training indexes and 30% Test indexes
+    trainval_idx, test_idx = train_test_split(idx, test_size=0.30, stratify=y, random_state=seed)
+
+    #Then 60% Training indexes and 10% Validation Indexes
+    train_idx, val_idx = train_test_split(trainval_idx, test_size=1 / 7, stratify=y[trainval_idx], random_state=seed)
+
+    print(f"Split: {len(train_idx)} train, {len(val_idx)} val, {len(test_idx)} test")
+
+    return train_idx, val_idx, test_idx
