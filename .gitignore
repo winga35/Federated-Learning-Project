@@ -1,0 +1,19 @@
+# environments
+.venv/
+__pycache__/
+*.py[cod]
+
+# data (lives in $FL_DATA_ROOT, outside the repo)
+data/
+*.tar.gz
+
+# notebooks
+.ipynb_checkpoints/
+
+# experiment outputs
+checkpoints/
+*.pt
+*.pth
+
+# misc
+.DS_Store
